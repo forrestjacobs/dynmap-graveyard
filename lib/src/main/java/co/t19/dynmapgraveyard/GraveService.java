@@ -1,6 +1,9 @@
 package co.t19.dynmapgraveyard;
 
+import java.util.Optional;
+
 import org.bukkit.entity.Player;
+import org.dynmap.markers.MarkerAPI;
 import org.dynmap.markers.MarkerIcon;
 import org.dynmap.markers.MarkerSet;
 
@@ -12,6 +15,21 @@ public class GraveService {
   public GraveService(MarkerIcon icon, MarkerSet set) {
     this.icon = icon;
     this.set = set;
+  }
+
+  public MarkerIcon getIcon() {
+    return icon;
+  }
+
+  public MarkerSet getMarkerSet() {
+    return set;
+  }
+
+  public GraveService(MarkerAPI markerService, String iconName, String setId, String setName) {
+    this(
+        markerService.getMarkerIcon(iconName),
+        Optional.ofNullable(markerService.getMarkerSet(setId))
+            .orElse(markerService.createMarkerSet(setId, setName, null, false)));
   }
 
   public void updateGrave(Player player) {

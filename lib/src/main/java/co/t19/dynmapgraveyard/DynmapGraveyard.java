@@ -3,8 +3,6 @@
  */
 package co.t19.dynmapgraveyard;
 
-import java.util.Optional;
-
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.dynmap.DynmapAPI;
@@ -13,7 +11,7 @@ public final class DynmapGraveyard extends JavaPlugin {
 
   private static final String DYNMAP_PLUGIN_NAME = "dynmap";
   private static final String MARKER_ICON_NAME = "skull";
-  private static final String MARKER_SET_ID = "Graveyard";
+  private static final String MARKER_SET_ID = "dynmapgraveyard";
   private static final String MARKER_SET_NAME = "Graveyard";
 
   @Override
@@ -27,11 +25,7 @@ public final class DynmapGraveyard extends JavaPlugin {
     }
 
     final var markerService = dynmap.getMarkerAPI();
-    final var markerIcon = markerService.getMarkerIcon(MARKER_ICON_NAME);
-    final var markerSet = Optional.ofNullable(markerService.getMarkerSet(MARKER_SET_ID))
-        .orElse(markerService.createMarkerSet(MARKER_SET_ID, MARKER_SET_NAME, null, false));
-
-    final var graveyardService = new GraveService(markerIcon, markerSet);
+    final var graveyardService = new GraveService(markerService, MARKER_ICON_NAME, MARKER_SET_ID, MARKER_SET_NAME);
     final var deathHandler = new PlayerDeathHandler(graveyardService);
     pluginService.registerEvents(deathHandler, this);
   }
