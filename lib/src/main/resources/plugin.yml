@@ -1,3 +1,4 @@
 name: dynmap-graveyard
 main: co.t19.dynmapgraveyard.DynmapGraveyard
 version: 1.0
+depend: [ dynmap ]
